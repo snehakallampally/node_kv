@@ -44,10 +44,20 @@ class EmployeeController {
 
   public getAllEmployees = async (
     req: RequestWithUser,
-    res: express.Response
+    res: express.Response,
+    next:express.NextFunction
   ) => {
+    try{
+      const role = req.role;
+      if (role != Role.HR) {
+        throw new HttpException(403, "No authorisation");
+      }
     const employees = await this.employeeService.getAllEmployees();
     res.status(200).send(employees);
+    }
+    catch(err){
+      next(err)
+    }
   };
 
   public getEmployeeById = async (

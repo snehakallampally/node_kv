@@ -8,7 +8,7 @@ class DepartmentRepository {
   }
 
   async findOneBy(filter: Partial<Department>): Promise<Department | null> {
-    return this.repository.findOne({ where: filter, relations: ["Employee"] });
+    return this.repository.findOne({ where: filter, relations: ["employees"] });
   }
 
   async save(department: Department): Promise<Department> {

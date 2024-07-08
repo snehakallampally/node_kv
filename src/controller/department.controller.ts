@@ -11,29 +11,42 @@ import EmployeeService from "../service/employee.service";
 import EmployeeRepository from "../repository/employee.repository";
 import EmployeeController from "./employee.controller";
 import Employee from "../entity/employee.entity";
+import { RequestWithUser } from "../utils/requestWithUser";
+import { Role } from "../utils/role.enum";
+import { authorize } from "../middleware/authorize.middleware";
 
 class DepartmentController {
   public router: express.Router;
   constructor(private departmentService: DepartmentService) {
     this.router = express.Router();
 
-    this.router.get("/", this.getAllDepartment);
+    this.router.get("/", authorize,this.getAllDepartment);
 
-    this.router.get("/:id", this.getDepartmentById);
+    this.router.get("/:id", authorize,this.getDepartmentById);
 
-    this.router.post("/", this.createDepartment);
+    this.router.post("/", authorize,this.createDepartment);
 
-    this.router.put("/:id", this.updateDepartment);
+    this.router.put("/:id",authorize, this.updateDepartment);
 
-    this.router.delete("/:id", this.deleteDepartment);
+    this.router.delete("/:id",authorize, this.deleteDepartment);
   }
 
   public getAllDepartment = async (
-    req: express.Request,
-    res: express.Response
+    req: RequestWithUser,
+    res: express.Response,
+    next:express.NextFunction
   ) => {
-    const departments = await this.departmentService.getAllDepartment();
+    try{
+      const role = req.role;
+      if (role != Role.HR) {
+        throw new HttpException(403, "No authorisation");
+      }
+      const departments = await this.departmentService.getAllDepartment();
     res.status(200).send(departments);
+    }
+    catch(err){
+      next(err)
+    }
   };
 
   public getDepartmentById = async (
@@ -56,11 +69,15 @@ class DepartmentController {
   };
 
   public createDepartment = async (
-    req: express.Request,
+    req: RequestWithUser,
     res: express.Response,
     next: express.NextFunction
   ) => {
     try {
+      const role=req.role;
+      if (role != Role.HR) {
+        throw new HttpException(403, "No authorisation");
+      }
       const departmentdto = plainToInstance(CreateDepartmentDto, req.body);
       const errors = await validate(departmentdto);
       if (errors.length) {
@@ -112,6 +129,7 @@ class DepartmentController {
       const dept = await this.departmentService.getDepartmentById(
         Number(req.params.id)
       );
+      console.log(dept)
       if (!dept) {
         const error = new HttpException(404, "no department with that id");
         throw error;

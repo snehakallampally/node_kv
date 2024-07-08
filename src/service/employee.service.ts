@@ -8,9 +8,13 @@ import { jwtPayload } from "../utils/jwtPayload";
 import { Role } from "../utils/role.enum";
 import bcrypt from "bcrypt";
 import jsonwebtoken from "jsonwebtoken";
+import DepartmentRepository from "../repository/department.repository";
+import EmployeeController from "../controller/employee.controller";
+import DepartmentService from "./department.service";
+import DepartmentController from "../controller/department.controller";
 
 class EmployeeService {
-  constructor(private employeeRepository: EmployeeRepository) {}
+  constructor(private employeeRepository: EmployeeRepository,private departmentService:DepartmentService) {}
 
   async loginEmployee(email: string, password: string) {
     const employee = await this.employeeRepository.findOneBy({
@@ -50,22 +54,27 @@ class EmployeeService {
     age: number,
     password: string,
     role: Role,
-    dept:number,
+    id:number,
     address: any
-  ) {
+  ) { 
+    
     const newEmployee = new Employee();
     newEmployee.name = name;
     newEmployee.email = email;
     newEmployee.age = age;
     newEmployee.password = password ? await bcrypt.hash(password, 10) : "";
     newEmployee.role = role;
-    newEmployee.department_id=dept;
+    newEmployee.department_id=id;
 
     const newAddress = new Address();
     newAddress.line1 = address.line1;
     newAddress.pincode = address.pincode;
-
     newEmployee.address = newAddress;
+
+    const dept = await this.departmentService.getDepartmentById(id)
+    console.log(dept);    if (!dept) {
+      throw new HttpException(404,"Department doesnt exist")
+    }
 
     return this.employeeRepository.save(newEmployee);
   }
@@ -88,11 +97,10 @@ class EmployeeService {
     newEmployee.role = role;
     newEmployee.department_id=dept;
 
-    const newAddress = new Address();
-    newAddress.line1 = address.line1;
-    newAddress.pincode = address.pincode;
+  
+    newEmployee.address.line1 = address.line1;
+    newEmployee.address.pincode = address.pincode;
 
-    newEmployee.address = newAddress;
     return this.employeeRepository.save(newEmployee);
   }
 

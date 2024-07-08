@@ -11,6 +11,7 @@ class Department extends AbstractEntity {
   @Column()
   dept_head: string;
 
+  @OneToMany(()=>Employee,(employee)=>employee.department)
   employees: Employee[];
 }
 
