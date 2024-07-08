@@ -2,8 +2,10 @@
   "compilerOptions": {
     "module": "commonjs",
     "esModuleInterop": true, //runs both require and import
-    "target": "es6",  //after building creates app.js
+    "target": "es6", //after building creates app.js
     "sourceMap": true,
-    "outDir": "dist"
+    "outDir": "dist",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true //enabling the use of decorators in ts
   }
 }
