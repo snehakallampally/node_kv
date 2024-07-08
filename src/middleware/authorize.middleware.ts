@@ -23,7 +23,7 @@ export const authorize = async (
   }
 };
 const getTokenFromRequestHeader = (req: RequestWithUser) => {
-  const bearerToken = req.header("Authorisation");
-  const token = bearerToken ? bearerToken.replace("Bearer", "") : "";
+  const bearerToken = req.header("Authorization");
+  const token = bearerToken ? bearerToken.replace("Bearer ", "") : "";
   return token;
 };

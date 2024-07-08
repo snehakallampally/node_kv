@@ -16,15 +16,15 @@ class EmployeeController {
 
     this.router.post("/login", this.loginEmployee);
 
-    this.router.get("/", this.getAllEmployees);
+    this.router.get("/", authorize, this.getAllEmployees);
 
-    this.router.get("/:id", this.getEmployeeById);
+    this.router.get("/:id", authorize, this.getEmployeeById);
 
-    this.router.post("/", this.createEmployee);
+    this.router.post("/", authorize, this.createEmployee);
 
-    this.router.put("/:id", this.updateEmployee);
+    this.router.put("/:id", authorize, this.updateEmployee);
 
-    this.router.delete("/:id", this.deleteEmployee);
+    this.router.delete("/:id", authorize, this.deleteEmployee);
   }
 
   public loginEmployee = async (
@@ -75,18 +75,16 @@ class EmployeeController {
     next: express.NextFunction
   ) => {
     try {
-
-      // const role=req.role;
-      // if (role!=Role.HR){
-      //      throw new HttpException(403,"No authorisation")
-      // }
+      const role = req.role;
+      if (role != Role.HR) {
+        throw new HttpException(403, "No authorisation");
+      }
 
       const employeeDto = plainToInstance(CreateEmployeeDto, req.body);
       const errors = await validate(employeeDto);
       if (errors.length) {
         console.log(JSON.stringify(errors));
         throw new HttpException(400, JSON.stringify(errors));
-      
       }
       const employees = await this.employeeService.createEmployee(
         employeeDto.name,
@@ -98,18 +96,21 @@ class EmployeeController {
         employeeDto.address
       );
       res.status(201).send(employees);
-    } 
-  catch (err) {
+    } catch (err) {
       next(err);
     }
   };
 
   public updateEmployee = async (
-    req: express.Request,
+    req: RequestWithUser,
     res: express.Response,
     next: express.NextFunction
   ) => {
     try {
+      const role = req.role;
+      if (role != Role.HR) {
+        throw new HttpException(403, "No authorisation");
+      }
       const employeeDto = plainToInstance(UpdateEmployeeDto, req.body);
       const errors = await validate(employeeDto);
       if (errors.length) {
@@ -134,13 +135,23 @@ class EmployeeController {
   };
 
   public deleteEmployee = async (
-    req: express.Request,
-    res: express.Response
+    req: RequestWithUser,
+    res: express.Response,
+    next:express.NextFunction
   ) => {
-    const employees = await this.employeeService.deleteEmployee(
-      Number(req.params.id)
-    );
-    res.status(204).send();
+    try{
+      const role = req.role;
+      if (role != Role.HR) {
+        throw new HttpException(403, "No authorisation");
+      }
+      const employees = await this.employeeService.deleteEmployee(
+        Number(req.params.id)
+      );
+      res.status(204).send();
+    }catch(err){
+      next(err)
+    }
+    
   };
 }
 export default EmployeeController;
