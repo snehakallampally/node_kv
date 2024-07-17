@@ -1,21 +1,25 @@
 import { useNavigate } from "react-router-dom";
-import login from "../assets/kv-login.jpeg";
+import Login_kv from "../assets/kv-login.jpeg";
 import Logo from "../assets/kv-logo.png";
 import Button from "../componenets/Button";
 import TextField from "../componenets/TextField";
 import "./styles.scss";
 import { useEffect, useRef, useState } from "react";
+import { useLoginMutation } from "../api/loginApi";
 
 const Login = () => {
   // const [userName, setUserName] = useState("");
-  localStorage.setItem("token", false);
+  // localStorage.setItem("token", true);
 
   const navigate = useNavigate();
-  const handleClick = () => {
-    const token = localStorage.getItem("token");
-    if (Boolean(token) === true) {
-      navigate("/employees");
-    }
+  const [login, { isSuccess, data }] = useLoginMutation();
+  const handleClick = async () => {
+    const response = await login({
+      email: info.username,
+      password: info.password,
+    });
+
+    navigate("/employees");
   };
   const [info, setInfo] = useState({
     username: "",
@@ -29,8 +33,15 @@ const Login = () => {
     userNameRef.current.focus();
   }, []);
 
+  useEffect(() => {
+    if (isSuccess && data) {
+      localStorage.setItem("token", data.data);
+      console.log(isSucess);
+    }
+  }, [isSuccess, data]);
+
   const onChangeUser = (user) => {
-    if (user.length > 10) {
+    if (user < 20) {
       setUserError(true);
     } else {
       setUserError(false);
@@ -47,11 +58,11 @@ const Login = () => {
     <div className="login1">
       <div className="hero">
         <div className="wrapper-hero">
-          <img src={login} alt="Login Image" className="login-image" />
+          <img src={Login_kv} alt="Login Image" className="login-image" />
         </div>
       </div>
       <div className="login">
-        <form action="/" method="post">
+        <form>
           <img src={Logo} alt="Logo" className="logo" />
           <TextField
             label="Username"
@@ -69,7 +80,7 @@ const Login = () => {
             onChange={onChangePass}
           />
 
-          <Button label="Log In" onClick={handleClick} />
+          <Button label="Log In" type="button" onClick={handleClick} />
         </form>
       </div>
     </div>

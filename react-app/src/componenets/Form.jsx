@@ -20,7 +20,9 @@ const handleCreateorEdit=()=>{
     role: "",
     status: "",
     address: "",
-    experience:""
+    experience:"",
+    email:"",
+    password:""
   });
 
 
@@ -31,7 +33,41 @@ const handleCreateorEdit=()=>{
     }
   }, []);
 
-  console.log(employee);
+const deptOptions=[
+  
+    {
+      id: 1,
+      val: "",
+      label: "Department",
+      isDisabled: true,
+    },
+    {
+      id: 1,
+      val: "UI",
+      label: "UI",
+      isDisabled: false,
+    },
+    {
+      id: 1,
+      val: "UX",
+      label: "UX",
+      isDisabled: false,
+    },
+    {
+      id: 1,
+      val: "Hr",
+      label: "HR",
+      isDisabled: false,
+    },
+    {
+      id: 1,
+      val: "Developement",
+      label: "Development",
+      isDisabled: false,
+    }
+
+  
+]
 
   const roleOptions = [
     {
@@ -39,21 +75,21 @@ const handleCreateorEdit=()=>{
       val: "",
       label: "Role",
       isDisabled: true,
-      isSelected:""
+      
     },
     {
       id: 2,
       val: "Software Developer",
       label: "Software Developer",
       isDisabled: false,
-      isSelected: ""
+    
     },
     {
       id: 3,
       val: "Associate Tester",
       label: "Associate Tester",
       isDisabled: false,
-      isSelected: " "
+      
     },
   ];
   const statusOptions = [
@@ -62,28 +98,28 @@ const handleCreateorEdit=()=>{
       val: "",
       label: "Status",
       isDisabled: true,
-      isSelected: " "
+      
     },
     {
       id: 2,
       val: "Active",
       label: "Active",
       isDisabled: false,
-      isSelected: " "
+      
     },
     {
       id: 3,
       val: "InActive",
       label: "InActive",
       isDisabled: false,
-      isSelected: " "
+      
     },
     {
       id: 4,
       val: "Probation",
       label: "Probation",
       isDisabled: false,
-      isSelected: " "
+      
     },
   ];
   const fields = [
@@ -105,13 +141,27 @@ const handleCreateorEdit=()=>{
     },
     {
       id: 3,
+      label: "Email",
+      field: "email",
+      placeholder: "Email",
+      isVisible:true
+    },
+    {
+      id: 4,
+      label: "Password",
+      field: "password",
+      placeholder: "Password",
+      isVisible:true
+    },
+    {
+      id: 5,
       label: "Joining Date",
       field: "joiningdate",
       placeholder: "Joining Date",
       isVisible:true,
     },
     {
-      id: 4,
+      id: 6,
       Component: Options,
       label: "Role",
       field: "role",
@@ -120,14 +170,16 @@ const handleCreateorEdit=()=>{
       isVisible:true,
     },
     {
-      id: 5,
+      id: 7,
+      Component: Options,
       label: "Department",
       field: "department",
       placeholder: "Department",
+      op:deptOptions,
       isVisible:true,
     },
     {
-      id: 6,
+      id: 8,
       Component: Options,
       label: "Status",
       field: "status",
@@ -136,14 +188,14 @@ const handleCreateorEdit=()=>{
       isVisible:true,
     },
     {
-      id: 7,
+      id: 9,
       label: "Experience",
       field: "experience",
       placeholder: "Experience",
       isVisible:true,
     },
     {
-      id: 8,
+      id: 10,
       label: "Address",
       field: "address",
       placeholder: "Address",

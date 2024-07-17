@@ -6,7 +6,7 @@ import HomeLayout from "./layouts/HomeLayout";
 import EmployeeList from "./pages/EmployeeList";
 import EditEmployee from "./pages/EditEmployee";
 import Employee from "./pages/Employee";
-import {Provider} from "react-redux"
+import { Provider } from "react-redux";
 import store from "./Store/store";
 
 const App = () => {
@@ -23,17 +23,16 @@ const App = () => {
         { index: true, element: <EmployeeList /> },
         { path: "create", element: <CreateEmployee /> },
         { path: "edit/:id", element: <EditEmployee /> },
-        {path: ":id",element:<Employee/>}
+        { path: ":id", element: <Employee /> },
       ],
     },
   ]);
   return (
     <Provider store={store}>
       <div>
-      <RouterProvider router={router} />
-    </div>
+        <RouterProvider router={router} />
+      </div>
     </Provider>
-    
   );
 };
 export default App;

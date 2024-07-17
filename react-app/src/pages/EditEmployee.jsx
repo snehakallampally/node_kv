@@ -13,7 +13,7 @@ const EditEmployee=()=>{
 
     // const {state,dispatch}=useOutletContext();
   const editEmp=(props)=>{
-    dispatch(editEmployee,props);
+    dispatch(editEmployee(props));
 }
     return(
         <main className="main1">

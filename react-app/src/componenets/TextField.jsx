@@ -1,4 +1,5 @@
 import { forwardRef, useEffect, useState } from "react";
+import React from "react";
 const TextField = forwardRef((props, ref) => {
   const [error, setError] = useState(false);
 
@@ -33,6 +34,7 @@ const TextField = forwardRef((props, ref) => {
         value={props.value}
         onChange={onChange}
         placeholder={props.placeholder}
+        data-testid="inputfield-testid"
       />
     </span>
   );

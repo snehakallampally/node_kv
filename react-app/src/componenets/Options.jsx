@@ -8,15 +8,18 @@ const Options = (props) => {
   return (
     <div className="ip">
       <label>{props.label}</label>
-      <select className="select" onChange={onChange} field={props.field}>
+      <select
+        className="select"
+        onChange={onChange}
+        value={props.value}
+        field={props.field}
+      >
         {props.op.map((item) => {
-            return (
-              <option key={item.id} disabled={item.isDisabled} value={item.val}>
-                {item.label}
-              </option>
-              );
-          
-    
+          return (
+            <option key={item.id} disabled={item.isDisabled}>
+              {item.label}
+            </option>
+          );
         })}
       </select>
     </div>

@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Check if input field is working properly check if snapshots are matching properly 1`] = `
+<DocumentFragment>
+  <span
+    class="ip"
+  >
+    <label
+      for="uname"
+    />
+    <input
+      class="ip"
+      data-testid="inputfield-testid"
+      id="uname"
+      name="username"
+      placeholder="Click"
+      value=""
+    />
+  </span>
+</DocumentFragment>
+`;

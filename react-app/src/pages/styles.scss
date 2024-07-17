@@ -421,6 +421,22 @@ header {
         border-color: #cecaca;
         font-size: 14px;
       }
+      
+      .status {
+        flex: 0 0 16%;
+        margin-bottom: 20px;
+        font-size: 14px;
+
+        .color{
+          padding-top: 9px;
+                padding-left: 12px;
+                padding-bottom: 7px;
+                margin-top: 7px;
+                width: 56px;
+                border-radius: 14px;
+        }
+      }
+     
 
       .ip1 {
         flex: 0 0 16%;

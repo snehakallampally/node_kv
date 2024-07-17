@@ -1,11 +1,32 @@
 import { useOutletContext } from "react-router-dom";
 import EmployeeDetails from "./EmployeeDetails";
 import { useSelector } from "react-redux";
+import { useGetEmployeeListQuery } from "../api/employeeApi";
+import { useState, useEffect } from "react";
 
 const EmployeeList = () => {
   // const {state,dispatch}=useOutletContext();
-  const employees=useSelector((state)=>state.employee.employees)
-  let count = 0;
+
+  const employees = useSelector((state) => state.employee.employees);
+  const [list, setList] = useState([]);
+  const { data = [] } = useGetEmployeeListQuery();
+
+
+  useEffect(() => {
+      const employees = data.map((employee) => ({
+        ...employee,
+        joiningdate: new Date(employee?.created_at).toLocaleString("en-GB", {
+          day: "numeric",
+          month: "short",
+          year: "numeric",
+        }),
+        employeeName: employee?.name,
+        status: employee?.status,
+        experience: employee?.experience,
+      }));
+     
+      setList(employees);
+    }, [data]);
 
   return (
     <main className="employee_list">
@@ -53,9 +74,10 @@ const EmployeeList = () => {
         </div>
       </section>
 
-      {employees.map((employee, index) => {
-        return <EmployeeDetails key={employee.id} content={employee} />;
-      })}
+      {
+        list?.map((employee, index) => (
+          <EmployeeDetails key={employee?.id} content={employee} />
+        ))}
     </main>
   );
 };

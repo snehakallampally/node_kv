@@ -10,9 +10,7 @@ const employeeReducer = createReducer({ employees: employees }, (builder) => {
     state.employees.push(action.payload);
   });
   builder.addCase(editEmployee,(state,action)=>{
-    console.log(action.payload.id)
-      state.employees.splice(action.payload.id,1,action.payload)
-      console.log(state.employees)
+     state.employees= state.employees.map((employee)=>{employee.id==action.payload.id?action.payload:employee})
       
   })
 });
