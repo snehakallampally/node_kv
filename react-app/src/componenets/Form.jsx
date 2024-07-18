@@ -33,34 +33,34 @@ const handleCreateorEdit=()=>{
     }
   }, []);
 
-const deptOptions=[
+const roleOptions=[
   
     {
       id: 1,
       val: "",
-      label: "Department",
+      label: "Role",
       isDisabled: true,
     },
     {
-      id: 1,
+      id: 2,
       val: "UI",
       label: "UI",
       isDisabled: false,
     },
     {
-      id: 1,
+      id: 3,
       val: "UX",
       label: "UX",
       isDisabled: false,
     },
     {
-      id: 1,
+      id: 4,
       val: "Hr",
-      label: "HR",
+      label: "Hr",
       isDisabled: false,
     },
     {
-      id: 1,
+      id: 5,
       val: "Developement",
       label: "Development",
       isDisabled: false,
@@ -69,28 +69,42 @@ const deptOptions=[
   
 ]
 
-  const roleOptions = [
+  const deptOptions = [
     {
       id: 1,
       val: "",
-      label: "Role",
+      label: "Department",
       isDisabled: true,
       
     },
     {
       id: 2,
-      val: "Software Developer",
-      label: "Software Developer",
+      val: "Testing",
+      label: "Testing",
       isDisabled: false,
     
     },
     {
       id: 3,
-      val: "Associate Tester",
-      label: "Associate Tester",
+      val: "ML",
+      label: "ML",
       isDisabled: false,
       
     },
+    {
+      id: 4,
+      val: "Development",
+      label: "Development",
+      isDisabled: false,
+      
+    },
+    {
+      id: 5,
+      val: "accounting",
+      label: "Accounting",
+      isDisabled: false,
+      
+    }
   ];
   const statusOptions = [
     {

@@ -10,7 +10,7 @@ import { useDeleteEmployeeMutation } from "../api/employeeApi";
 
 const EmployeeDetails = (props) => {
 
-  const {state,dispatch}=useOutletContext();
+  // const {state,dispatch}=useOutletContext();
 
   const [del, setDeleteState] = useState(false);
 
